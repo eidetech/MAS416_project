@@ -1,72 +1,83 @@
 clc; clear all; close all;
 
 % Position (xyz) and time vectors
-x = [2000 2000 1600 1600 2000];
-y = [500 -500 500 0 500];
-z = [1600 1600 900 900 1600];
+x = [2 2 1.6 1.6 2];
+y = [0.5 -0.5 0.5 0 0.5];
+z = [1.6 1.6 0.9 0.9 1.6];
 t = [0 1 2 3 4];
-
+t_current = 0;
+dt = 10^-3;
+idx = 1;
 % Calculate position, velocity and acceleration for xyz
-[px,vx,ax,t_tot] = trajGen(t,x);
-[py,vy,ay,t_tot] = trajGen(t,y);
-[pz,vz,az,t_tot] = trajGen(t,z);
+while(t_current <= t(5))
+[px,vx,ax,t_tot] = trajGen(t,x, t_current);
+t_tot(idx) = t_current;
+pxplt(idx) = px;
+vxplt(idx) = vx;
+axplt(idx) = ax;
 
-% Plot position, velocity and acceleration for the trajectory in xyz
-% x
-subplot(3,3,1)
-plot(t,x, 'o')
-hold on
-plot(t_tot, px, 'LineWidth', 2)
-legend('x points', 'x', 'Interpreter', 'latex')
-grid
-subplot(3,3,4)
-plot(t_tot, vx, 'LineWidth', 2)
-legend('$\dot{x}$', 'Interpreter', 'latex')
-grid
-subplot(3,3,7)
-plot(t_tot, ax, 'LineWidth', 2)
-legend('$\ddot{x}$', 'Interpreter', 'latex')
-grid
+idx = idx + 1;
+t_current = t_current + dt;
+end
+% [py,vy,ay,t_tot] = trajGen(t,y);
+% [pz,vz,az,t_tot] = trajGen(t,z);
+% 
+% % Plot position, velocity and acceleration for the trajectory in xyz
+% % x
+% subplot(3,3,1)
+% plot(t,x, 'o')
+% hold on
+% plot(t_tot, px, 'LineWidth', 2)
+% legend('x points', 'x', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,4)
+% plot(t_tot, vx, 'LineWidth', 2)
+% legend('$\dot{x}$', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,7)
+% plot(t_tot, ax, 'LineWidth', 2)
+% legend('$\ddot{x}$', 'Interpreter', 'latex')
+% grid
+% 
+% % y
+% subplot(3,3,2)
+% plot(t,y, 'o')
+% hold on
+% plot(t_tot, py, 'LineWidth', 2)
+% legend('y points', 'y', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,5)
+% plot(t_tot, vy, 'LineWidth', 2)
+% legend('$\dot{y}$', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,8)
+% plot(t_tot, ay, 'LineWidth', 2)
+% legend('$\ddot{y}$', 'Interpreter', 'latex')
+% grid
+% 
+% % z
+% subplot(3,3,3)
+% plot(t,z, 'o')
+% hold on
+% plot(t_tot, pz, 'LineWidth', 2)
+% legend('z points', 'z ', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,6)
+% plot(t_tot, vz, 'LineWidth', 2)
+% legend('$\dot{z}$ ', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,9)
+% plot(t_tot, az, 'LineWidth', 2)
+% legend('$\ddot{z}$ ', 'Interpreter', 'latex')
+% grid
+% 
+% % 3D plot of trajectory
+% hold off
+% figure
+% plot3(px,py,pz, 'ro', 'LineWidth', 2, 'MarkerIndices', 1:50:length(px))
+% grid
 
-% y
-subplot(3,3,2)
-plot(t,y, 'o')
-hold on
-plot(t_tot, py, 'LineWidth', 2)
-legend('y points', 'y', 'Interpreter', 'latex')
-grid
-subplot(3,3,5)
-plot(t_tot, vy, 'LineWidth', 2)
-legend('$\dot{y}$', 'Interpreter', 'latex')
-grid
-subplot(3,3,8)
-plot(t_tot, ay, 'LineWidth', 2)
-legend('$\ddot{y}$', 'Interpreter', 'latex')
-grid
-
-% z
-subplot(3,3,3)
-plot(t,z, 'o')
-hold on
-plot(t_tot, pz, 'LineWidth', 2)
-legend('z points', 'z ', 'Interpreter', 'latex')
-grid
-subplot(3,3,6)
-plot(t_tot, vz, 'LineWidth', 2)
-legend('$\dot{z}$ ', 'Interpreter', 'latex')
-grid
-subplot(3,3,9)
-plot(t_tot, az, 'LineWidth', 2)
-legend('$\ddot{z}$ ', 'Interpreter', 'latex')
-grid
-
-% 3D plot of trajectory
-hold off
-figure
-plot3(px,py,pz, 'ro', 'LineWidth', 2, 'MarkerIndices', 1:50:length(px))
-grid
-
-function [p,v,a,t_tot] = trajGen(t,p)
+function [p,v,a,t_tot] = trajGen(t,p,t_current)
 % Function for calculating position, velociy and acceleration for
 % a trajectory through 5 points.
 
@@ -131,16 +142,16 @@ d = coeff(14:18);
 dt = 10^-3;
 
 % Make time vectors with given timestep
-t1 = 0:dt:t(2);
-t2 = t(2):dt:t(3);
-t3 = t(3):dt:t(4);
-t4 = t(4):dt:t(5);
+% t1 = 0:dt:t(2);
+% t2 = t(2):dt:t(3);
+% t3 = t(3):dt:t(4);
+% t4 = t(4):dt:t(5);
 
 % Total time for the complete trajectory
-t_tot = 0:dt:t(5);
+% t_tot = 0:dt:t(5);
 
 % First trajectory
-for i = 1:length(t1)
+% for i = 1:length(t1)
     x1 = F4(t1(i))*a;
     v1 = F4Dot(t1(i))*a;
     a1 = F4Dotdot(t1(i))*a;
@@ -148,7 +159,7 @@ for i = 1:length(t1)
     pplt(i) = x1;
     vplt(i) = v1;
     aplt(i) = a1;
-end
+% end
 
 % Second trajectory
 for i = 1:length(t2)

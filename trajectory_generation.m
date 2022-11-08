@@ -1,30 +1,50 @@
 clc; clear all; close all;
 
 % Position (xyz) and time vectors
-x = [2000 2000 1600 1600 2000];
-y = [500 -500 500 0 500];
-z = [1600 1600 900 900 1600];
+x = [2 2 1.6 1.6 2];
+y = [0.5 -0.5 0.5 0 0.5];
+z = [1.6 1.6 0.9 0.9 1.6];
 t = [0 1 2 3 4];
-
+t_current = 0;
+dt = 10^-3;
+idx = 1;
 % Calculate position, velocity and acceleration for xyz
-[px,vx,ax,t_tot] = trajGen(t,x);
-[py,vy,ay,t_tot] = trajGen(t,y);
-[pz,vz,az,t_tot] = trajGen(t,z);
+while(t_current <= t(5))
+[px,vx,ax] = trajGen(t,x, t_current);
+[py,vy,ay] = trajGen(t,y, t_current);
+[pz,vz,az] = trajGen(t,z, t_current);
+t_tot(idx) = t_current;
+pxplt(idx) = px;
+vxplt(idx) = vx;
+axplt(idx) = ax;
 
+pyplt(idx) = py;
+vyplt(idx) = vy;
+ayplt(idx) = ay;
+
+pzplt(idx) = pz;
+vzplt(idx) = vz;
+azplt(idx) = az;
+
+idx = idx + 1;
+t_current = t_current + dt;
+end
+
+% 
 % Plot position, velocity and acceleration for the trajectory in xyz
 % x
 subplot(3,3,1)
 plot(t,x, 'o')
 hold on
-plot(t_tot, px, 'LineWidth', 2)
+plot(t_tot, pxplt, 'LineWidth', 2)
 legend('x points', 'x', 'Interpreter', 'latex')
 grid
 subplot(3,3,4)
-plot(t_tot, vx, 'LineWidth', 2)
+plot(t_tot, vxplt, 'LineWidth', 2)
 legend('$\dot{x}$', 'Interpreter', 'latex')
 grid
 subplot(3,3,7)
-plot(t_tot, ax, 'LineWidth', 2)
+plot(t_tot, axplt, 'LineWidth', 2)
 legend('$\ddot{x}$', 'Interpreter', 'latex')
 grid
 
@@ -32,15 +52,15 @@ grid
 subplot(3,3,2)
 plot(t,y, 'o')
 hold on
-plot(t_tot, py, 'LineWidth', 2)
+plot(t_tot, pyplt, 'LineWidth', 2)
 legend('y points', 'y', 'Interpreter', 'latex')
 grid
 subplot(3,3,5)
-plot(t_tot, vy, 'LineWidth', 2)
+plot(t_tot, vyplt, 'LineWidth', 2)
 legend('$\dot{y}$', 'Interpreter', 'latex')
 grid
 subplot(3,3,8)
-plot(t_tot, ay, 'LineWidth', 2)
+plot(t_tot, ayplt, 'LineWidth', 2)
 legend('$\ddot{y}$', 'Interpreter', 'latex')
 grid
 
@@ -48,25 +68,25 @@ grid
 subplot(3,3,3)
 plot(t,z, 'o')
 hold on
-plot(t_tot, pz, 'LineWidth', 2)
+plot(t_tot, pzplt, 'LineWidth', 2)
 legend('z points', 'z ', 'Interpreter', 'latex')
 grid
 subplot(3,3,6)
-plot(t_tot, vz, 'LineWidth', 2)
+plot(t_tot, vzplt, 'LineWidth', 2)
 legend('$\dot{z}$ ', 'Interpreter', 'latex')
 grid
 subplot(3,3,9)
-plot(t_tot, az, 'LineWidth', 2)
+plot(t_tot, azplt, 'LineWidth', 2)
 legend('$\ddot{z}$ ', 'Interpreter', 'latex')
 grid
 
 % 3D plot of trajectory
 hold off
 figure
-plot3(px,py,pz, 'ro', 'LineWidth', 2, 'MarkerIndices', 1:50:length(px))
+plot3(pxplt,pyplt,pzplt, 'ro', 'LineWidth', 2, 'MarkerIndices', 1:50:length(pxplt))
 grid
 
-function [p,v,a,t_tot] = trajGen(t,p)
+function [p,v,a] = trajGen(t,p,t_current)
 % Function for calculating position, velociy and acceleration for
 % a trajectory through 5 points.
 
@@ -127,64 +147,23 @@ b = coeff(6:9);
 c = coeff(10:13);
 d = coeff(14:18);
 
-% Define timestep for simulation
-dt = 10^-3;
-
-% Make time vectors with given timestep
-t1 = 0:dt:t(2);
-t2 = t(2):dt:t(3);
-t3 = t(3):dt:t(4);
-t4 = t(4):dt:t(5);
-
-% Total time for the complete trajectory
-t_tot = 0:dt:t(5);
-
-% First trajectory
-for i = 1:length(t1)
-    x1 = F4(t1(i))*a;
-    v1 = F4Dot(t1(i))*a;
-    a1 = F4Dotdot(t1(i))*a;
-
-    pplt(i) = x1;
-    vplt(i) = v1;
-    aplt(i) = a1;
+if(t_current < t(2))
+    p = F4(t_current)*a;
+    v = F4Dot(t_current)*a;
+    a = F4Dotdot(t_current)*a;
+elseif(t_current < t(3))
+    p = F3(t_current)*b;
+    v = F3Dot(t_current)*b;
+    a = F3Dotdot(t_current)*b;
+elseif(t_current < t(4))
+    p = F3(t_current)*c;
+    v = F3Dot(t_current)*c;
+    a = F3Dotdot(t_current)*c;
+else
+    p = F4(t_current)*d;
+    v = F4Dot(t_current)*d;
+    a = F4Dotdot(t_current)*d;
 end
-
-% Second trajectory
-for i = 1:length(t2)
-    x2 = F3(t2(i))*b;
-    v2 = F3Dot(t2(i))*b;
-    a2 = F3Dotdot(t2(i))*b;
-
-    pplt(i+length(t1)) = x2;
-    vplt(i+length(t1)) = v2;
-    aplt(i+length(t1)) = a2;
-end
-
-% Third trajectory
-for i = 1:length(t3)
-    x3 = F3(t3(i))*c;
-    v3 = F3Dot(t3(i))*c;
-    a3 = F3Dotdot(t3(i))*c;
-
-    pplt(i+2*length(t2)) = x3;
-    vplt(i+2*length(t2)) = v3;
-    aplt(i+2*length(t2)) = a3;
-end
-
-% Last trajectory
-for i = 1:length(t4)
-    x4 = F4(t4(i))*d;
-    v4 = F4Dot(t4(i))*d;
-    a4 = F4Dotdot(t4(i))*d;
-
-    pplt(i+3*length(t2)-3) = x4;
-    vplt(i+3*length(t2)-3) = v4;
-    aplt(i+3*length(t2)-3) = a4;
-end
-p = pplt;
-v = vplt;
-a = aplt;
 end
 
 % Functions for time vectors
