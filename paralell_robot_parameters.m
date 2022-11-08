@@ -3,12 +3,8 @@ g = 9.81;
 
 %dimmensions
 T = 0.1;
-PB = T+0.02;
-hl = 0.22;  %pinbolt length
-W2 = 0.1;
-T2 = 0.1;
+PB = T+0.02; %pinbolt length
 add_to_dim = 0.05;
-offset = 0.2; %arms offset from senter
 
 %length beetween joints
 L1 = 0.240; 
@@ -95,6 +91,7 @@ P4z = 0.9;
 P5x = P1x;
 P5y = P1y;
 P5z = P1z;
+
 
 
 
