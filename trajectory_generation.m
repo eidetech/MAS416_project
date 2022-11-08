@@ -1,8 +1,10 @@
 clc; clear all; close all;
 
+% Position and time vectors
 x = [1 4 3 6];
 t = [0 1 2 3];
 
+% Preallocate matrix and vector sizes and init to zero
 A = zeros(14, 14);
 B = zeros(14,1);
 
@@ -41,18 +43,23 @@ B(12) = x(4);
 % Solve for coefficients
 x = A\B;
 
+% Extract coefficients from x vector
 a = x(1:5);
 b = x(6:9);
 c = x(10:14);
 
+% Define timestep
 dt = 10^-3;
 
+% Make time vectors with given timestep
 t1 = 0:dt:t(2);
 t2 = t(2):dt:t(3);
 t3 = t(3):dt:t(4);
 
+% Total time for the complete trajectory
 ttot = 0:dt:t(4);
 
+% First path
 for i = 1:length(t1)
     x1 = F4(t1(i))*a;
     v1 = F4Dot(t1(i))*a;
@@ -63,6 +70,7 @@ for i = 1:length(t1)
     aplt(i) = a1;
 end
 
+% Second path
 for i = 1:length(t2)
     x2 = F3(t2(i))*b;
     v2 = F3Dot(t2(i))*b;
@@ -73,6 +81,7 @@ for i = 1:length(t2)
     aplt(i+length(t2)-2) = a2;
 end
 
+% Last path
 for i = 1:length(t3)
     x3 = F4(t3(i))*c;
     v3 = F4Dot(t3(i))*c;
@@ -83,6 +92,7 @@ for i = 1:length(t3)
     aplt(i+2*length(t2)-2) = a3;
 end
 
+% Plot position, velocity and acceleration for the path
 subplot(3,1,1)
 plot(ttot, xplt)
 subplot(3,1,2)
