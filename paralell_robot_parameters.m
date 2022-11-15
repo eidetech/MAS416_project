@@ -4,7 +4,6 @@ g = 9.81;
 %dimmensions
 T = 0.1;
 PB = T+0.02; %pinbolt length
-add_to_dim = 0.05;
 
 %length beetween joints
 L1 = 0.240; 
@@ -93,8 +92,9 @@ P5y = P1y;
 P5z = P1z;
 
 
-
-
-
+R = 0.0; 
+G = 0.8;
+B = 1.0;
+O = 0.2;
 
 
