@@ -4,7 +4,6 @@ g = 9.81;
 %dimmensions
 T = 0.1;
 PB = T+0.02; %pinbolt length
-add_to_dim = 0.05;
 
 %length beetween joints
 L1 = 0.240; 
@@ -93,7 +92,106 @@ P5y = P1y;
 P5z = P1z;
 
 
+R = 0.0; 
+G = 0.8;
+B = 1.0;
+O = 0.2;
 
+%Pid and Motor PARAMETERS:
+
+I_max = 16;% Katrine gives value
+K_m = [0.5, 1, 1.5];
+gear_ratio = [20, 50, 100, 200];
+
+
+KpOUTERALL = 100;
+KiOUTERALL = 0;
+KdOUTERALL = 0;
+
+KpINNERALL = 100;
+KdINNERALL = 0;
+KiINNERALL = 0;
+
+
+%Joint A
+%thetha, outer loop
+KpAt = 600;
+KiAt = KiOUTERALL;
+KdAt = KdOUTERALL;
+%omega innner loop
+KpAw = 600;
+KiAw = KdINNERALL;
+KdAw = KiINNERALL;
+
+KmA = K_m(3); %Katrine gives value
+g_ratioA = gear_ratio(4); %gear ratio
+
+
+
+%Joint B
+KpBt = KpOUTERALL;
+KiBt = KiOUTERALL;
+KdBt = KdOUTERALL;
+
+%omega innner loop
+KpBw = KpINNERALL;
+KiBw = KdINNERALL;
+KdBw = KiINNERALL;
+
+KmB = K_m(3); %Katrine gives value
+g_ratioB = gear_ratio(4);  %gear ratio
+
+%Joint B2
+KpB2t = KpOUTERALL;
+KiB2t = KiOUTERALL;
+KdB2t = KdOUTERALL;
+
+%omega innner loop
+KpB2w = KpINNERALL;
+KiB2w = KdINNERALL;
+KdB2w = KiINNERALL;
+
+KmB2 = K_m(3); %Katrine gives value
+g_ratioB2 = gear_ratio(4);  %gear ratio
+
+%Joint D
+KpDt= KpOUTERALL;
+KiDt = KiOUTERALL;
+KdDt = KdOUTERALL;
+
+%omega innner loop
+KpDw = KpINNERALL;
+KiDw = KdINNERALL;
+KdDw = KiINNERALL;
+
+KmD = K_m(3); %Katrine gives value
+g_ratioD = gear_ratio(4);  %gear ratio
+
+%Joint E
+KpEt = KpOUTERALL;
+KiEt = KiOUTERALL;
+KdEt = KdOUTERALL;
+
+%omega innner loop
+KpEw = KpINNERALL;
+KiEw = KdINNERALL;
+KdEw = KiINNERALL;
+
+KmE =K_m(3); %Katrine gives value
+g_ratioE = gear_ratio(4);  %gear ratio
+
+%Joint H
+KpHt = KpOUTERALL/10;
+KiHt = KiOUTERALL;
+KdHt = KdOUTERALL;
+
+%omega innner loop
+KpHw = KpINNERALL/10;
+KiHw = KdINNERALL;
+KdHw = KiINNERALL;
+
+KmH = K_m(3); %Katrine gives value
+g_ratioH = gear_ratio(4);  %gear ratio
 
 
 
