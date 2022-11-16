@@ -1,4 +1,5 @@
-clc; close all; clear;
+%clc; 
+close all;% clear; because of OUT to plot!
 g = 9.81;
 
 %dimmensions
@@ -103,12 +104,12 @@ I_max = 16;% Katrine gives value
 K_m = [0.5, 1, 1.5];
 gear_ratio = [20, 50, 100, 200];
 
-
-KpOUTERALL = 200;
+skalar = 1;
+KpOUTERALL = 400;
 KiOUTERALL = 0;
 KdOUTERALL = 0;
 
-KpINNERALL = 200;
+KpINNERALL = 400;
 KdINNERALL = 0;
 KiINNERALL = 0;
 
@@ -186,13 +187,13 @@ g_ratioH = gear_ratio(4);  %gear ratio
 
 
 %Joint I
-KpIt = KpOUTERALL;
-KiIt = KiOUTERALL;
+KpIt = 600;
+KiIt = 0;
 KdIt = KdOUTERALL;
 
 %omega innner loop
-KpIw = KpINNERALL;
-KiIw = KdINNERALL;
+KpIw = 600;
+KiIw = 0;
 KdIw = KiINNERALL;
 
 KmE =K_m(3); %Katrine gives value
@@ -215,12 +216,17 @@ g_ratioE = gear_ratio(4);  %gear ratio
 
 
 % INITIAL VALUE ANGLE I Read from ref data in hand of god model:
-A0 = 1.88003550;
-B0 = -0.1981775;
-B20 = 0.02486;
+A0 = 1.8800355033;
+B0 = -0.198177592218;
+B20 = 0.024486078864;
 
-I0 = -2.09378427;
-H0 = -0.35330985;
-G0 = -2.0666454;
+I0 = -2.0937842723459;
+H0 = -0.3533098526406;
+G0 = -2.06664547582;
+
+
+
+
+
 
 
