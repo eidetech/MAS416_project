@@ -104,21 +104,21 @@ K_m = [0.5, 1, 1.5];
 gear_ratio = [20, 50, 100, 200];
 
 
-KpOUTERALL = 100;
+KpOUTERALL = 200;
 KiOUTERALL = 0;
 KdOUTERALL = 0;
 
-KpINNERALL = 100;
+KpINNERALL = 200;
 KdINNERALL = 0;
 KiINNERALL = 0;
 
 
 %Joint A
-%thetha, outer loop
-KpAt = 600;
+%thetha, outer loop, contropls theta
+KpAt = 600; % 
 KiAt = KiOUTERALL;
 KdAt = KdOUTERALL;
-%omega innner loop
+%omega innner loop, controls theta dot, in a way
 KpAw = 600;
 KiAw = KdINNERALL;
 KdAw = KiINNERALL;
@@ -167,31 +167,62 @@ KdDw = KiINNERALL;
 KmD = K_m(3); %Katrine gives value
 g_ratioD = gear_ratio(4);  %gear ratio
 
-%Joint E
-KpEt = KpOUTERALL;
-KiEt = KiOUTERALL;
-KdEt = KdOUTERALL;
-
-%omega innner loop
-KpEw = KpINNERALL;
-KiEw = KdINNERALL;
-KdEw = KiINNERALL;
-
-KmE =K_m(3); %Katrine gives value
-g_ratioE = gear_ratio(4);  %gear ratio
 
 %Joint H
-KpHt = KpOUTERALL/10;
+KpHt = KpOUTERALL;
 KiHt = KiOUTERALL;
 KdHt = KdOUTERALL;
 
 %omega innner loop
-KpHw = KpINNERALL/10;
+KpHw = KpINNERALL;
 KiHw = KdINNERALL;
 KdHw = KiINNERALL;
 
 KmH = K_m(3); %Katrine gives value
 g_ratioH = gear_ratio(4);  %gear ratio
+
+
+
+
+
+%Joint I
+KpIt = KpOUTERALL;
+KiIt = KiOUTERALL;
+KdIt = KdOUTERALL;
+
+%omega innner loop
+KpIw = KpINNERALL;
+KiIw = KdINNERALL;
+KdIw = KiINNERALL;
+
+KmE =K_m(3); %Katrine gives value
+g_ratioE = gear_ratio(4);  %gear ratio
+
+
+
+%Joint G
+KpGt = KpOUTERALL;
+KiGt = KiOUTERALL;
+KdGt = KdOUTERALL;
+
+%omega innner loop
+KpGw = KpINNERALL;
+KiGw = KdINNERALL;
+KdGw = KiINNERALL;
+
+KmE =K_m(3); %Katrine gives value
+g_ratioE = gear_ratio(4);  %gear ratio
+
+
+% INITIAL VALUE ANGLE I Read from ref data in hand of god model:
+A0 = 1.88003550;
+B0 = -0.1981775;
+B20 = 0.02486;
+
+I0 = -2.09378427;
+H0 = -0.35330985;
+G0 = -2.0666454;
+
 
 
 
