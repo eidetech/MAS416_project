@@ -1,4 +1,5 @@
-clc; close all; clear;
+%clc; 
+close all;% clear; because of OUT to plot!
 g = 9.81;
 
 %dimmensions
@@ -103,82 +104,84 @@ I_max = 16;% Katrine gives value
 K_m = [0.5, 1, 1.5];
 gear_ratio = [20, 50, 100, 200];
 
-
-KpOUTERALL = 200;
+KpOUTERALL = 7000;
 KiOUTERALL = 0;
 KdOUTERALL = 0;
 
-KpINNERALL = 200;
+KpINNERALL = 3000;
 KdINNERALL = 0;
 KiINNERALL = 0;
 
 
+
+
 %Joint A
 %thetha, outer loop, contropls theta
-KpAt = 600; % 
-KiAt = KiOUTERALL;
-KdAt = KdOUTERALL;
+KpAt = 7000; % tuned with all other joints locked
+KiAt = 0;
+KdAt = 0;
 %omega innner loop, controls theta dot, in a way
-KpAw = 600;
-KiAw = KdINNERALL;
-KdAw = KiINNERALL;
+KpAw =3000; %Tuned with all other joints locked
+KiAw = 0;
+KdAw = 0;
 
-KmA = K_m(3); %Katrine gives value
-g_ratioA = gear_ratio(4); %gear ratio
+KmA = K_m(3); %Må være motor 3
+g_ratioA = gear_ratio(4); % Må være gir 4
 
 
 
 %Joint B
-KpBt = KpOUTERALL;
-KiBt = KiOUTERALL;
-KdBt = KdOUTERALL;
+KpBt = 15000; %OK 4*1.2s
+KiBt = 0;
+KdBt = 0;
 
 %omega innner loop
-KpBw = KpINNERALL;
-KiBw = KdINNERALL;
-KdBw = KiINNERALL;
+KpBw = 9000; %Ok 4*1.2s
+KiBw = 0;
+KdBw = 0;
 
 KmB = K_m(3); %Katrine gives value
 g_ratioB = gear_ratio(4);  %gear ratio
 
 %Joint B2
-KpB2t = KpOUTERALL;
-KiB2t = KiOUTERALL;
-KdB2t = KdOUTERALL;
+KpB2t = 30000;  % Virker greit 6e-4 rad i størst avvik
+KiB2t = 0;
+KdB2t = 0;
 
 %omega innner loop
-KpB2w = KpINNERALL;
-KiB2w = KdINNERALL;
-KdB2w = KiINNERALL;
+KpB2w = 3000;
+KiB2w = 0;
+KdB2w = 0;
 
-KmB2 = K_m(3); %Katrine gives value
+KmB2 = K_m(3); %Ikke endret enda men no saturation
 g_ratioB2 = gear_ratio(4);  %gear ratio
 
-%Joint D
-KpDt= KpOUTERALL;
-KiDt = KiOUTERALL;
-KdDt = KdOUTERALL;
+%Joint G
+KpGt = 300; % Starts to ossilate easily. be careful
+KiGt = 0;
+KdGt = 0;
 
 %omega innner loop
-KpDw = KpINNERALL;
-KiDw = KdINNERALL;
-KdDw = KiINNERALL;
+KpGw = 300;
+KiGw = 0;
+KdGw = 0;
 
-KmD = K_m(3); %Katrine gives value
-g_ratioD = gear_ratio(4);  %gear ratio
+KmG =K_m(3); %Katrine gives value
+g_ratioG = gear_ratio(4);  %gear ratio
+
 
 
 %Joint H
-KpHt = KpOUTERALL;
-KiHt = KiOUTERALL;
-KdHt = KdOUTERALL;
+KpHt = 200;
+KiHt = 0;
+KdHt =0;
 
 %omega innner loop
-KpHw = KpINNERALL;
-KiHw = KdINNERALL;
-KdHw = KiINNERALL;
+KpHw = 5; %Only values i could manage here. Look more at this later
+KiHw = 0;
+KdHw = 0;
 
-KmH = K_m(3); %Katrine gives value
+KmH =K_m(3); %Katrine gives value
 g_ratioH = gear_ratio(4);  %gear ratio
 
 
@@ -186,42 +189,34 @@ g_ratioH = gear_ratio(4);  %gear ratio
 
 
 %Joint I
-KpIt = KpOUTERALL;
-KiIt = KiOUTERALL;
-KdIt = KdOUTERALL;
+KpIt = 100;
+KiIt = 0;
+KdIt = 0;
 
 %omega innner loop
-KpIw = KpINNERALL;
-KiIw = KdINNERALL;
-KdIw = KiINNERALL;
+KpIw = 7;
+KiIw = 0;
+KdIw = 0;
 
-KmE =K_m(3); %Katrine gives value
-g_ratioE = gear_ratio(4);  %gear ratio
+KmI =K_m(3); %
+g_ratioI = gear_ratio(4);  %gear ratio
 
 
 
-%Joint G
-KpGt = KpOUTERALL;
-KiGt = KiOUTERALL;
-KdGt = KdOUTERALL;
 
-%omega innner loop
-KpGw = KpINNERALL;
-KiGw = KdINNERALL;
-KdGw = KiINNERALL;
-
-KmE =K_m(3); %Katrine gives value
-g_ratioE = gear_ratio(4);  %gear ratio
 
 
 % INITIAL VALUE ANGLE I Read from ref data in hand of god model:
-A0 = 1.88003550;
-B0 = -0.1981775;
-B20 = 0.02486;
+A0 = 1.8800355033;
+B0 = -0.198177592218;
+B20 = 0.024486078864;
 
-I0 = -2.09378427;
-H0 = -0.35330985;
-G0 = -2.0666454;
+G0 = -2.06664547582;
+I0 = -2.0937842723459;
+H0 = -0.3533098526406;
+
+
+
 
 
 
