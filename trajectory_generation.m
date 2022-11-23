@@ -4,7 +4,7 @@ clc; clear all; close all;
 x = [2 2 1.6 1.6 2];
 y = [0.5 -0.5 0.5 0 0.5];
 z = [1.6 1.6 0.9 0.9 1.6];
-t = [0 1 2 3 4];
+t = [0 0.7 1.5 2 3];
 t_current = 0;
 dt = 10^-3;
 idx = 1;
@@ -26,64 +26,86 @@ pzplt(idx) = pz;
 vzplt(idx) = vz;
 azplt(idx) = az;
 
+% if(t_current < t(2))
+%     t1(idx) = t_current;
+%     P1(idx) = px;
+% end
+
 idx = idx + 1;
 t_current = t_current + dt;
 end
-
 % 
-% Plot position, velocity and acceleration for the trajectory in xyz
-% x
-subplot(3,3,1)
-plot(t,x, 'o')
-hold on
-plot(t_tot, pxplt, 'LineWidth', 2)
-legend('x points', 'x', 'Interpreter', 'latex')
-grid
-subplot(3,3,4)
-plot(t_tot, vxplt, 'LineWidth', 2)
-legend('$\dot{x}$', 'Interpreter', 'latex')
-grid
-subplot(3,3,7)
-plot(t_tot, axplt, 'LineWidth', 2)
-legend('$\ddot{x}$', 'Interpreter', 'latex')
-grid
+% for i = 1:length(t_tot)
+%     if(t_tot(i) < t(2))
+%         t1(i)
+% end
 
-% y
-subplot(3,3,2)
-plot(t,y, 'o')
-hold on
-plot(t_tot, pyplt, 'LineWidth', 2)
-legend('y points', 'y', 'Interpreter', 'latex')
-grid
-subplot(3,3,5)
-plot(t_tot, vyplt, 'LineWidth', 2)
-legend('$\dot{y}$', 'Interpreter', 'latex')
-grid
-subplot(3,3,8)
-plot(t_tot, ayplt, 'LineWidth', 2)
-legend('$\ddot{y}$', 'Interpreter', 'latex')
-grid
+% % 
+% % Plot position, velocity and acceleration for the trajectory in xyz
+% % x
+% subplot(3,3,1)
+% plot(t,x, 'o')
+% hold on
+% plot(t_tot, pxplt, 'LineWidth', 2)
+% legend('x points', 'x', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,4)
+% plot(t_tot, vxplt, 'LineWidth', 2)
+% legend('$\dot{x}$', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,7)
+% plot(t_tot, axplt, 'LineWidth', 2)
+% legend('$\ddot{x}$', 'Interpreter', 'latex')
+% grid
+% 
+% % y
+% subplot(3,3,2)
+% plot(t,y, 'o')
+% hold on
+% plot(t_tot, pyplt, 'LineWidth', 2)
+% legend('y points', 'y', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,5)
+% plot(t_tot, vyplt, 'LineWidth', 2)
+% legend('$\dot{y}$', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,8)
+% plot(t_tot, ayplt, 'LineWidth', 2)
+% legend('$\ddot{y}$', 'Interpreter', 'latex')
+% grid
+% 
+% % z
+% subplot(3,3,3)
+% plot(t,z, 'o')
+% hold on
+% plot(t_tot, pzplt, 'LineWidth', 2)
+% legend('z points', 'z ', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,6)
+% plot(t_tot, vzplt, 'LineWidth', 2)
+% legend('$\dot{z}$ ', 'Interpreter', 'latex')
+% grid
+% subplot(3,3,9)
+% plot(t_tot, azplt, 'LineWidth', 2)
+% legend('$\ddot{z}$ ', 'Interpreter', 'latex')
+% grid
+% 
+% % 3D plot of trajectory
+% hold off
+% figure
+% plot3(pxplt,pyplt,pzplt)%, 'ro', 'LineWidth', 2, 'MarkerIndices', 1:50:length(pxplt))
+% grid
 
-% z
-subplot(3,3,3)
-plot(t,z, 'o')
+% Piecewise plotting
+plot(t_tot(t_tot<t(2)), pxplt(t_tot<t(2)), 'LineWidth', 2)
 hold on
-plot(t_tot, pzplt, 'LineWidth', 2)
-legend('z points', 'z ', 'Interpreter', 'latex')
-grid
-subplot(3,3,6)
-plot(t_tot, vzplt, 'LineWidth', 2)
-legend('$\dot{z}$ ', 'Interpreter', 'latex')
-grid
-subplot(3,3,9)
-plot(t_tot, azplt, 'LineWidth', 2)
-legend('$\ddot{z}$ ', 'Interpreter', 'latex')
-grid
+plot(t_tot(t_tot<t(3) & t_tot>t(2)), pxplt(t_tot<t(3) & t_tot>t(2)), 'LineWidth', 2)
+plot(t_tot(t_tot<t(4) & t_tot>t(3)), pxplt(t_tot<t(4) & t_tot>t(3)), 'LineWidth', 2)
+plot(t_tot(t_tot<t(5) & t_tot>t(4)), pxplt(t_tot<t(5) & t_tot>t(4)), 'LineWidth', 2)
 
-% 3D plot of trajectory
-hold off
-figure
-plot3(pxplt,pyplt,pzplt, 'ro', 'LineWidth', 2, 'MarkerIndices', 1:50:length(pxplt))
+% plot(t_tot, pxplt, 'LineWidth', 2)
+legend('T1(t)', 'T2(t)', 'T3(t)', 'T4(t)',  'Interpreter', 'latex')
+ylim([1.5 2.2])
 grid
 
 function [p,v,a] = trajGen(t,p,t_current)

@@ -1,0 +1,4 @@
+plot(helo3{1}.Values)
+hold on
+plot(helo3{2}.Values)
+plot(helo3{3}.Values)
