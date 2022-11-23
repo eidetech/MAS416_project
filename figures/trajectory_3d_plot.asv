@@ -14,10 +14,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fig = figure;          % Handle for the figure
 LLC_frame = [200,10];      % Position of lower left corner of the frame on the screen [cm]
-fig.Units = 'centimeters';
+fig.Units = 'ce';
 fig.Position = [LLC_frame W_frame/2 H_frame]; %Specifying the width and height of the frame
-
-% hold on
+fig.Renderer = 'painters'
 
 plot3(pxplt,pyplt, pzplt, '--', 'LineWidth', 2, 'MarkerIndices', 1:50:length(pxplt))
 legend('Trajectory', 'Interpreter', 'latex')
