@@ -9,7 +9,7 @@ pt = [px; py; pz]';
 
 t = [0 0.7 1.5 2 3];
 
-dt = 0.0001;
+dt = 10^-3;
 N = length(pt)-1;   % number of paths to generate and put together
 
 v = 1;
@@ -91,82 +91,64 @@ for i=1:N
     end
 end
 
-% plot3(x_path_pos,y_path_pos,z_path_pos)%, 'o', 'MarkerIndices', 1:1000:length(z_path_pos))
-% xlabel("x")
-% ylabel("y")
-% zlabel("z")
-% hold on
-% plot3(px(1), py(1), pz(1), '*')
-% plot3(px(2), py(2), pz(2), 'o')
-% plot3(px(3), py(3), pz(3), '^')
-% plot3(px(4), py(4), pz(4), '*')
-% plot3(px(5), py(5), pz(5), 'o')
-% grid
-% 
-% figure
-% % Plot position, velocity and acceleration for the trajectory in xyz
-% % x
-% subplot(3,3,1)
-% plot(t,px, 'o')
-% hold on
-% plot(t_vect, x_path_pos, 'LineWidth', 2)
-% legend('x points', 'x', 'Interpreter', 'latex')
-% grid
-% subplot(3,3,4)
-% plot(t_vect, x_path_vel, 'LineWidth', 2)
-% legend('$\dot{x}$', 'Interpreter', 'latex')
-% grid
-% subplot(3,3,7)
-% plot(t_vect, x_path_acc, 'LineWidth', 2)
-% legend('$\ddot{x}$', 'Interpreter', 'latex')
-% grid
-% 
-% % y
-% subplot(3,3,2)
-% plot(t,py, 'o')
-% hold on
-% plot(t_vect, y_path_pos, 'LineWidth', 2)
-% legend('y points', 'y', 'Interpreter', 'latex')
-% grid
-% subplot(3,3,5)
-% plot(t_vect, y_path_vel, 'LineWidth', 2)
-% legend('$\dot{y}$', 'Interpreter', 'latex')
-% grid
-% subplot(3,3,8)
-% plot(t_vect, y_path_acc, 'LineWidth', 2)
-% legend('$\ddot{y}$', 'Interpreter', 'latex')
-% grid
-% 
-% % z
-% subplot(3,3,3)
-% plot(t,pz, 'o')
-% hold on
-% plot(t_vect, z_path_pos, 'LineWidth', 2)
-% legend('z points', 'z ', 'Interpreter', 'latex')
-% grid
-% subplot(3,3,6)
-% plot(t_vect, z_path_vel, 'LineWidth', 2)
-% legend('$\dot{z}$ ', 'Interpreter', 'latex')
-% grid
-% subplot(3,3,9)
-% plot(t_vect, z_path_acc, 'LineWidth', 2)
-% legend('$\ddot{z}$ ', 'Interpreter', 'latex')
-% grid
-
-% figure(4)
-% set(4,'Units','Centimeter')
-% set(4,'Position',[100 1 25 25]);
-% xlabel('x [m]')
-% ylabel('z [m]')
-plot3(x_path_pos,y_path_pos, z_path_pos)
+plot3(x_path_pos,y_path_pos,z_path_pos)
+xlabel("x")
+ylabel("y")
+zlabel("z")
 hold on
-for i=1:100:length(t_vect)
-    plot3(x_path_pos(i),y_path_pos(i), z_path_pos(i), 'ro')
-    hold on
+plot3(px(1), py(1), pz(1), '*')
+plot3(px(2), py(2), pz(2), 'o')
+plot3(px(3), py(3), pz(3), '^')
+plot3(px(4), py(4), pz(4), '*')
+plot3(px(5), py(5), pz(5), 'o')
+grid
 
-    
-    axis equal
-    box on
-    grid on
-    pause(0.01)
-end
+figure
+% Plot position, velocity and acceleration for the trajectory in xyz
+% x
+subplot(3,3,1)
+plot(t,px, 'o')
+hold on
+plot(t_vect, x_path_pos, 'LineWidth', 2)
+legend('x points', 'x', 'Interpreter', 'latex')
+grid
+subplot(3,3,4)
+plot(t_vect, x_path_vel, 'LineWidth', 2)
+legend('$\dot{x}$', 'Interpreter', 'latex')
+grid
+subplot(3,3,7)
+plot(t_vect, x_path_acc, 'LineWidth', 2)
+legend('$\ddot{x}$', 'Interpreter', 'latex')
+grid
+
+% y
+subplot(3,3,2)
+plot(t,py, 'o')
+hold on
+plot(t_vect, y_path_pos, 'LineWidth', 2)
+legend('y points', 'y', 'Interpreter', 'latex')
+grid
+subplot(3,3,5)
+plot(t_vect, y_path_vel, 'LineWidth', 2)
+legend('$\dot{y}$', 'Interpreter', 'latex')
+grid
+subplot(3,3,8)
+plot(t_vect, y_path_acc, 'LineWidth', 2)
+legend('$\ddot{y}$', 'Interpreter', 'latex')
+grid
+
+% z
+subplot(3,3,3)
+plot(t,pz, 'o')
+hold on
+plot(t_vect, z_path_pos, 'LineWidth', 2)
+legend('z points', 'z ', 'Interpreter', 'latex')
+grid
+subplot(3,3,6)
+plot(t_vect, z_path_vel, 'LineWidth', 2)
+legend('$\dot{z}$ ', 'Interpreter', 'latex')
+grid
+subplot(3,3,9)
+plot(t_vect, z_path_acc, 'LineWidth', 2)
+legend('$\ddot{z}$ ', 'Interpreter', 'latex')
+grid
