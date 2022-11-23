@@ -1,6 +1,9 @@
 clc; close all;
 
-filename = 'omega_A_plot';
+filename = 'trajectory_3d_plot';
+
+W_frame = 15;           % Final width of the frame [cm] of the plot in your document
+H_frame = 5;            % Final height of the frame [cm] of the plot in your document
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if(LW_thin)
@@ -9,20 +12,19 @@ else
 LW = 2;             % Line width of lines on plot
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 fig = figure;          % Handle for the figure
 LLC_frame = [200,10];      % Position of lower left corner of the frame on the screen [cm]
-fig.Units = 'centimeters';
+fig.Units = 'inches';
 fig.Position = [LLC_frame W_frame/2 H_frame]; %Specifying the width and height of the frame
-hold on
 
-plot(omegaA{1}.Values, 'LineWidth', LW)
-hold on
-plot(omegaA{2}.Values, 'LineWidth', LW)
-legend('$\omega_A$', '$M_{JB}$', 'Interpreter', 'latex')
+% hold on
+
+plot3(pxplt,pyplt, pzplt, '--', 'LineWidth', 2, 'MarkerIndices', 1:50:length(pxplt))
+legend('Trajectory', 'Interpreter', 'latex')
 grid on;
-xlabel('$t$ [s]', 'interpreter', 'latex')
-ylabel('[rad/s]', 'interpreter', 'latex')
+xlabel('x [m]', 'interpreter', 'latex')
+ylabel('y [m]', 'interpreter', 'latex')
+zlabel('z [m]', 'interpreter', 'latex')
 title('')
 box on;
 set(gca, 'FontName', font)
